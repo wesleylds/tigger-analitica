@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Tigger BBTips Bridge",
+  "version": "1.0.0",
+  "description": "Sincroniza matrizes da BBTips com a Tigger local em tempo real.",
+  "permissions": [],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://app.bbtips.com.br/*",
+    "https://api.bbtips.com.br/*",
+    "http://127.0.0.1:5173/*",
+    "http://localhost:5173/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.bbtips.com.br/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject.js"
+      ],
+      "matches": [
+        "https://app.bbtips.com.br/*"
+      ]
+    }
+  ]
+}

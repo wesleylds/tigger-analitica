@@ -1,0 +1,17 @@
+---
+description: Convenções BB Tips / filtro Odds (Tigger Analitica) — estado estável
+globs: "**/{App.tsx,staticData.ts,vite.config.ts,bbtipsBet365.ts,AnalysisPage.tsx}"
+alwaysApply: false
+---
+
+# BB Tips e filtro Odds (não regredir)
+
+- **Fonte única**: dados vêm de `useBbtipsLiveRecords` (BB Tips), não Easy Live.
+- **`requestedBbtipsMarkets` (`App.tsx`)**: incluir `filters.market`, sequências e **`bbtipsSupplementOddDisplayMarkets`** (derivado de `oddDisplayGroups`, sem “Selecione as Odds”). **Não** incluir `filters.oddsView` — troca no dropdown é só leitura de `record.odds` (instantâneo).
+- **`bbtipsSupplementOddDisplayMarkets` / `bbtipsSupplementOddDisplayMarketsLight` (`staticData.ts`)**: Betano usa a lista **completa** (dropdown Odds). **Bet365 e Express 365** usam **`Light`** (só linha Over/Under + Viradinha + Ambas Não) para não estourar o proxy/Puppeteer; Total de Gols FT pode depender só do pipe.
+- **`vite.config.ts`**: `includeLegacyBaseOdds` com limite de mercados; fetch **Node** em paralelo (rápido). **Puppeteer** só no 403, em lotes pequenos — não serializar fetch Node (atrasava a primeira matriz).
+- **`bbtipsBet365.ts`**: `OddsByMarket` não sobrescreve odd boa do pipe; alias `1 gol FT` ↔ `1 gols FT`. **Âncora da grade** (`normalizeHourDelta`, `future` pending): hora/minuto de `DataAtualizacao` em **`America/Sao_Paulo`**, não `Date#getHours()` local (Bet365/Express alinham à BB Tips em qualquer fuso).
+- **`AnalysisPage.tsx`**: não reintroduzir banner “procurando odds…” por mercado; `getMatrixCellOddValue` prioriza `cell.odds` e aliases de mercado.
+- **`App.tsx` `buildBbtipsLiveMatrixRows`**: hora da linha = **`record.hour`** do bucket UTC (`toUtcHourStart`), igual às chaves de `buildBbtipsMatrixStats` — **não** usar `getHours()` do `bucketStart` (Bet365/Express desalinhavam da Betano).
+
+Antes de alterar isto: impacto em número de requests ao proxy BB Tips e risco de `Target page closed` no Puppeteer.

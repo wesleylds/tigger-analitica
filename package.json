@@ -1,0 +1,47 @@
+{
+  "name": "tigger-analitica",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "bbtips:audit-league-ids": "node ./scripts/audit-bbtips-league-ids.mjs",
+    "bbtips:audit-realtime": "node ./scripts/audit-bbtips-realtime.mjs",
+    "bbtips:bridge-browser": "node ./scripts/start-bbtips-bridge-browser.mjs",
+    "bbtips:hot-bridge": "node ./scripts/start-bbtips-hot-bridge.mjs",
+    "bbtips:bridge-login": "node ./scripts/login-bbtips-bridge-profile.mjs",
+    "bbtips:refresh-session": "node ./scripts/refresh-bbtips-session.mjs",
+    "scrape:sites": "node ./scripts/capture-site-apis.mjs",
+    "scrape:easy-live": "node ./scripts/fetch-easy-live-data.mjs",
+    "scrape:easy-video": "node ./scripts/capture-easy-video.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.104.0",
+    "better-sqlite3": "^12.9.0",
+    "hls.js": "^1.6.15",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^24.12.2",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "playwright": "^1.59.1",
+    "supabase": "^2.93.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.58.0",
+    "vite": "^8.0.4"
+  }
+}
